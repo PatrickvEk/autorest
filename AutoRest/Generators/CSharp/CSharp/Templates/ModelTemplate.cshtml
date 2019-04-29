@@ -164,34 +164,7 @@ namespace @(Settings.Namespace).Models
         @:/// </summary>
         @:public @Model.MethodQualifier void Validate()
         @:{
-            bool anythingToValidate = false;
-
-            if (Model.BaseModelType != null && Model.BaseModelType.ShouldValidateChain())
-            {
-                anythingToValidate = true;
-            @:base.Validate();
-            }
-
-            foreach (var property in Model.Properties.Where(p => p.IsRequired && !p.IsReadOnly && !p.IsConstant && !p.Type.IsValueType()))
-            {
-                anythingToValidate = true;
-            @:if (@property.Name == null)
-            @:{
-                @:throw new ValidationException(ValidationRules.CannotBeNull, "@property.Name");
-            @:}
-            @:
-            }
-            foreach (var property in Model.Properties.Where(p => !p.IsConstant 
-                && (p.Constraints.Any() || !(p.Type is PrimaryType))))
-            {
-                anythingToValidate = true;
-            @:@property.Type.ValidateType(Model.Scope, string.Format("this.{0}", property.Name), property.Constraints)
-            @:
-            }
-            if (!anythingToValidate)
-            {
-            @://Nothing to validate
-            }
+ 
         @:}
         }
     }
