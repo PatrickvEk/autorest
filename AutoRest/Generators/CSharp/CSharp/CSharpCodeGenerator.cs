@@ -95,53 +95,53 @@ namespace Microsoft.Rest.Generator.CSharp
         public override async Task Generate(ServiceClient serviceClient)
         {
             // Service client
-            var serviceClientTemplate = new ServiceClientTemplate
-            {
-                Model = new ServiceClientTemplateModel(serviceClient, InternalConstructors),
-            };
-            await Write(serviceClientTemplate, serviceClient.Name + ".cs");
+//            var serviceClientTemplate = new ServiceClientTemplate
+//            {
+//                Model = new ServiceClientTemplateModel(serviceClient, InternalConstructors),
+//            };
+//            await Write(serviceClientTemplate, serviceClient.Name + ".cs");
 
             // Service client extensions
-            if (serviceClient.Methods.Any(m => m.Group == null))
-            {
-                var extensionsTemplate = new ExtensionsTemplate
-                {
-                    Model = new ExtensionsTemplateModel(serviceClient, null),
-                };
-                await Write(extensionsTemplate, serviceClient.Name + "Extensions.cs");
-            }
+//            if (serviceClient.Methods.Any(m => m.Group == null))
+//            {
+//                var extensionsTemplate = new ExtensionsTemplate
+//                {
+//                    Model = new ExtensionsTemplateModel(serviceClient, null),
+//                };
+//                await Write(extensionsTemplate, serviceClient.Name + "Extensions.cs");
+//            }
 
             // Service client interface
-            var serviceClientInterfaceTemplate = new ServiceClientInterfaceTemplate
-            {
-                Model = new ServiceClientTemplateModel(serviceClient, InternalConstructors),
-            };
-            await Write(serviceClientInterfaceTemplate, "I" + serviceClient.Name + ".cs");
+//            var serviceClientInterfaceTemplate = new ServiceClientInterfaceTemplate
+//            {
+//                Model = new ServiceClientTemplateModel(serviceClient, InternalConstructors),
+//            };
+//            await Write(serviceClientInterfaceTemplate, "I" + serviceClient.Name + ".cs");
 
             // Operations
-            foreach (var group in serviceClient.MethodGroups)
-            {
-                // Operation
-                var operationsTemplate = new MethodGroupTemplate
-                {
-                    Model = new MethodGroupTemplateModel(serviceClient, group),
-                };
-                await Write(operationsTemplate, operationsTemplate.Model.MethodGroupType + ".cs");
-
-                // Service client extensions
-                var operationExtensionsTemplate = new ExtensionsTemplate
-                {
-                    Model = new ExtensionsTemplateModel(serviceClient, group),
-                };
-                await Write(operationExtensionsTemplate, group + "Extensions.cs");
-
-                // Operation interface
-                var operationsInterfaceTemplate = new MethodGroupInterfaceTemplate
-                {
-                    Model = new MethodGroupTemplateModel(serviceClient, group),
-                };
-                await Write(operationsInterfaceTemplate, "I" + operationsInterfaceTemplate.Model.MethodGroupType + ".cs");
-            }
+//            foreach (var group in serviceClient.MethodGroups)
+//            {
+//                // Operation
+//                var operationsTemplate = new MethodGroupTemplate
+//                {
+//                    Model = new MethodGroupTemplateModel(serviceClient, group),
+//                };
+//                await Write(operationsTemplate, operationsTemplate.Model.MethodGroupType + ".cs");
+//
+//                // Service client extensions
+//                var operationExtensionsTemplate = new ExtensionsTemplate
+//                {
+//                    Model = new ExtensionsTemplateModel(serviceClient, group),
+//                };
+//                await Write(operationExtensionsTemplate, group + "Extensions.cs");
+//
+//                // Operation interface
+//                var operationsInterfaceTemplate = new MethodGroupInterfaceTemplate
+//                {
+//                    Model = new MethodGroupTemplateModel(serviceClient, group),
+//                };
+//                await Write(operationsInterfaceTemplate, "I" + operationsInterfaceTemplate.Model.MethodGroupType + ".cs");
+//            }
 
             // Models
             foreach (var model in serviceClient.ModelTypes.Concat(serviceClient.HeaderTypes))
