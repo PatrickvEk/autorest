@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Microsoft.Rest.Generator.ClientModel;
 using Microsoft.Rest.Generator.CSharp.Templates;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace Microsoft.Rest.Generator.CSharp
 {
@@ -150,7 +151,7 @@ namespace Microsoft.Rest.Generator.CSharp
                 {
                     Model = new ModelTemplateModel(model),
                 };
-                await Write(modelTemplate, Path.Combine("Models", model.Name + ".cs"));
+                await Write(modelTemplate, Path.Combine("Models", model.Name.PascalToKebabCase() + ".ts"));
             }
 
             // Enums
@@ -160,18 +161,36 @@ namespace Microsoft.Rest.Generator.CSharp
                 {
                     Model = new EnumTemplateModel(enumType),
                 };
-                await Write(enumTemplate, Path.Combine("Models", enumTemplate.Model.TypeDefinitionName + ".cs"));
+                await Write(enumTemplate, Path.Combine("Models", enumTemplate.Model.TypeDefinitionName.PascalToKebabCase() + ".ts"));
             }
 
-            // Exception
-            foreach (var exceptionType in serviceClient.ErrorTypes)
-            {
-                var exceptionTemplate = new ExceptionTemplate
-                {
-                    Model = new ModelTemplateModel(exceptionType),
-                };
-                await Write(exceptionTemplate, Path.Combine("Models", exceptionTemplate.Model.ExceptionTypeDefinitionName + ".cs"));
-            }
+//            // Exception
+//            foreach (var exceptionType in serviceClient.ErrorTypes)
+//            {
+//                var exceptionTemplate = new ExceptionTemplate
+//                {
+//                    Model = new ModelTemplateModel(exceptionType),
+//                };
+//                await Write(exceptionTemplate, Path.Combine("Models", exceptionTemplate.Model.ExceptionTypeDefinitionName + ".cs"));
+//            }
+        }
+    }
+
+    public static class StringExtensions
+    {
+        public static string PascalToKebabCase(this string value)
+        {
+            if (string.IsNullOrEmpty(value))
+                return value;
+
+            return Regex.Replace(
+                    value,
+                    "(?<!^)([A-Z][a-z]|(?<=[a-z])[A-Z])",
+                    "-$1",
+                    RegexOptions.Compiled)
+                .Trim()
+                .ToLower();
         }
     }
 }
+

@@ -3,110 +3,24 @@
 @using Microsoft.Rest.Generator.Utilities
 @using Microsoft.Rest.Generator
 @inherits Microsoft.Rest.Generator.Template<Microsoft.Rest.Generator.CSharp.ModelTemplateModel>
-@Header("// ")
-@EmptyLine
-namespace @(Settings.Namespace).Models
-{
-@foreach (var usingString in Model.Usings) {
-@:    using @usingString;
-}
-@EmptyLine
 
-    @if (!string.IsNullOrWhiteSpace(Model.Documentation))
+export interface @Model.Name@(Model.BaseModelType != null ? " : " + Model.BaseModelType.Name : ""){
+    @if (!string.IsNullOrEmpty(Model.ConstructorParameters))
     {
-    @:/// <summary>
-    @:@WrapComment("/// ", Model.Documentation.EscapeXmlComment())
-    @:/// </summary>
+    @foreach (var property in Model.ComposedProperties.Where(p => p.Type is CompositeType
+                 && !p.IsConstant
+                 && p.IsRequired
+                 && ((CompositeType)p.Type).ContainsConstantProperties))
+    {
+  @:@(property.Name) = new @(property.Type.Name.Replace("List<","Array<").Replace("?",""))();
+
+
     }
 
-    public class @Model.Name@(Model.BaseModelType != null ? " : " + Model.BaseModelType.Name : "")
+    foreach (var property in Model.Properties.Where(p => !p.IsConstant))
     {
-        /// <summary>
-        @WrapComment("/// ", ("Initializes a new instance of the " + Model.Name + " class.").EscapeXmlComment())
-        /// </summary>
-        @if (Model.Properties.Any(p => p.Type is CompositeType && ((CompositeType)p.Type).ContainsConstantProperties))
-        {
-<text>
-        public @(Model.Name)()
-        {
-            @foreach(var property in Model.ComposedProperties.Where(p => p.Type is CompositeType
-                && !p.IsConstant
-                && p.IsRequired
-                && ((CompositeType)p.Type).ContainsConstantProperties))
-            {
-            @:@(property.Name) = new @(property.Type.Name)();
-            }
-        }
-</text>
-        }
-        else
-        {
-        @:public @(Model.Name)() { }
-        }
-        
+  @:@(CodeNamer.CamelCase(property.Name)): @(property.Type.Name.Replace("IList<", "Array<").Replace("?", ""));
+    }            
 
-        @EmptyLine
-
-        @if (!string.IsNullOrEmpty(Model.ConstructorParameters))
-        {
-        @:/// <summary>
-        @:@WrapComment("/// ", ("Initializes a new instance of the " + Model.Name + " class.").EscapeXmlComment())
-        @:/// </summary>
-        @:public @(Model.Name)(@Model.ConstructorParameters)
-            if (!string.IsNullOrEmpty(Model.BaseConstructorCall))
-            {
-            @:@(Model.BaseConstructorCall)
-            }
-        @:{
-
-            @foreach (var property in Model.ComposedProperties.Where(p => p.Type is CompositeType
-                     && !p.IsConstant
-                     && p.IsRequired
-                     && ((CompositeType)p.Type).ContainsConstantProperties))
-            {
-            @:@(property.Name) = new @(property.Type.Name)();
-            }
-
-            foreach (var property in Model.Properties.Where(p => !p.IsConstant))
-            {
-            @:@(property.Name) = @(CodeNamer.CamelCase(property.Name));
-            }            
-
-        @:}
-        }
-
-        @if (Model.PropertyTemplateModels.Any(p => p.IsConstant))
-        {
-        @:/// <summary>
-        @:@WrapComment("/// ", ("Static constructor for " + Model.Name + " class.").EscapeXmlComment())
-        @:/// </summary>
-        @:static @(Model.Name)()
-        @:{
-            @foreach (var property in Model.PropertyTemplateModels.Where(p => p.IsConstant))
-            {
-            @:@(property.Name) = @(property.DefaultValue);
-            }
-        @:}
-        }
-
-        @EmptyLine
-        @foreach (var property in Model.PropertyTemplateModels.Where(p => !p.IsConstant))
-        {
-        @:/// <summary>
-        @:@WrapComment("/// ", property.Documentation.EscapeXmlComment())
-        @:/// </summary>
-        @:public @property.Type.Name @property.Name { get; @(property.IsReadOnly ? "private " : "")set; }
-        @EmptyLine
-        }
-
-        @foreach (var property in Model.PropertyTemplateModels.Where(p => p.IsConstant))
-        {
-        @:/// <summary>
-        @:@WrapComment("/// ", property.Documentation.EscapeXmlComment())
-        @:/// </summary>
-          
-        @:public static @property.Type.Name @property.Name { get; private set; }
-        @EmptyLine
-        }
-    }
+@:}
 }
