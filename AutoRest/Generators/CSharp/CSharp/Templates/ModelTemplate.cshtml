@@ -2,9 +2,10 @@
 @using Microsoft.Rest.Generator.ClientModel
 @using Microsoft.Rest.Generator.Utilities
 @using Microsoft.Rest.Generator
+@using Microsoft.Rest.Generator.CSharp
 @inherits Microsoft.Rest.Generator.Template<Microsoft.Rest.Generator.CSharp.ModelTemplateModel>
 
-export interface @Model.Name@(Model.BaseModelType != null ? " : " + Model.BaseModelType.Name : ""){
+export interface @Model.Name@(Model.BaseModelType != null ? " : " + Model.BaseModelType.Name : "") {
     @if (!string.IsNullOrEmpty(Model.ConstructorParameters))
     {
     @foreach (var property in Model.ComposedProperties.Where(p => p.Type is CompositeType
@@ -12,14 +13,14 @@ export interface @Model.Name@(Model.BaseModelType != null ? " : " + Model.BaseMo
                  && p.IsRequired
                  && ((CompositeType)p.Type).ContainsConstantProperties))
     {
-  @:@(property.Name) = new @(property.Type.Name.Replace("List<","Array<").Replace("?",""))();
+  @:@(property.Name) = new @(property.Type.Name.FixType());
 
 
     }
 
     foreach (var property in Model.Properties.Where(p => !p.IsConstant))
     {
-  @:@(CodeNamer.CamelCase(property.Name)): @(property.Type.Name.Replace("IList<", "Array<").Replace("?", ""));
+  @:@(CodeNamer.CamelCase(property.Name)): @(property.Type.Name.FixType());
     }            
 
 @:}

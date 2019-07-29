@@ -27,6 +27,7 @@
     <Compile Include="$(SolutionDir)\Tools\AssemblyVersionInfo.cs">
       <Link>Properties\AssemblyVersionInfo.cs</Link>
     </Compile>
+    <Compile Include="TypeScriptHelper.cs" />
     <Compile Include="CSharpCodeGenerator.cs" />
     <Compile Include="CSharpCodeNamer.cs" />
     <Compile Include="GlobalSuppressions.cs" />
