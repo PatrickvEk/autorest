@@ -5,7 +5,10 @@
 @inherits Microsoft.Rest.Generator.Template<Microsoft.Rest.Generator.CSharp.ModelTemplateModel>
 @Header("// ")
 @EmptyLine
-namespace @(Settings.Namespace).Models
+using System;
+using System.Collections.Generic;
+@EmptyLine
+namespace @(Settings.Namespace)
 {
 @foreach (var usingString in Model.Usings) {
 @:    using @usingString;
