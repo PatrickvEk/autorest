@@ -1,0 +1,77 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>Provides common error handling, tracing, and HTTP/REST-based pipeline manipulation. 
+Supported Platforms:
+  -   Portable Class Libraries
+  -   .NET Framework 4.5
+  -   Windows 8
+  -   Windows Phone 8.1
+  -   DotNet Core</Description>
+    <Copyright>Copyright (c) Microsoft Corporation</Copyright>
+    <AssemblyTitle>Client Runtime for Microsoft Azure Libraries</AssemblyTitle>
+    <VersionPrefix>3.2.0</VersionPrefix>
+    <Authors>Microsoft</Authors>
+    <TargetFrameworks>net45;portable45-net45+win8+wpa81;dnxcore50</TargetFrameworks>
+    <DelaySign>true</DelaySign>
+    <AssemblyName>Microsoft.Rest.ClientRuntime.Azure</AssemblyName>
+    <AssemblyOriginatorKeyFile>../../../Tools/MSSharedLibKey.snk</AssemblyOriginatorKeyFile>
+    <SignAssembly>true</SignAssembly>
+    <PublicSign Condition=" '$(OS)' != 'Windows_NT' ">true</PublicSign>
+    <PackageId>Microsoft.Rest.ClientRuntime.Azure</PackageId>
+    <PackageTags>Microsoft Azure AutoRest ClientRuntime REST azureofficial</PackageTags>
+    <PackageIconUrl>http://go.microsoft.com/fwlink/?LinkID=288890</PackageIconUrl>
+    <PackageProjectUrl>https://github.com/Azure/AutoRest</PackageProjectUrl>
+    <PackageLicenseUrl>https://raw.githubusercontent.com/Microsoft/dotnet/master/LICENSE</PackageLicenseUrl>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
+    <GenerateAssemblyDescriptionAttribute>false</GenerateAssemblyDescriptionAttribute>
+    <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
+    <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
+    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
+    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
+    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+    <GenerateAssemblyCopyrightAttribute>false</GenerateAssemblyCopyrightAttribute>
+    <GenerateNeutralResourcesLanguageAttribute>false</GenerateNeutralResourcesLanguageAttribute>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Microsoft.Rest.ClientRuntime\Microsoft.Rest.ClientRuntime.csproj" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net45' ">
+    <Reference Include="System" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.WebRequest" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'portable45-net45+win8+wpa81' ">
+    <Reference Include="System" />
+    <Reference Include="System.Collections" />
+    <Reference Include="System.Diagnostics.Debug" />
+    <Reference Include="System.Diagnostics.Tools" />
+    <Reference Include="System.Globalization" />
+    <Reference Include="System.IO" />
+    <Reference Include="System.Linq" />
+    <Reference Include="System.Linq.Expressions" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Primitives" />
+    <Reference Include="System.ObjectModel" />
+    <Reference Include="System.Reflection" />
+    <Reference Include="System.Reflection.Extensions" />
+    <Reference Include="System.Resources.ResourceManager" />
+    <Reference Include="System.Runtime" />
+    <Reference Include="System.Runtime.Extensions" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Text.Encoding" />
+    <Reference Include="System.Threading" />
+    <Reference Include="System.Threading.Tasks" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.XmlSerializer" />
+  </ItemGroup>
+
+</Project>

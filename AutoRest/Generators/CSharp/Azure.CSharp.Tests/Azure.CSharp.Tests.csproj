@@ -1,0 +1,40 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <VersionPrefix>1.5.0</VersionPrefix>
+    <Authors>Microsoft</Authors>
+    <TargetFramework>dnxcore50</TargetFramework>
+    <AssemblyName>Azure.CSharp.Tests</AssemblyName>
+    <PackageId>Azure.CSharp.Tests</PackageId>
+    <PackageTags>Microsoft AutoRest ClientRuntime REST</PackageTags>
+    <PackageProjectUrl>https://github.com/Azure/AutoRest</PackageProjectUrl>
+    <PackageLicenseUrl>https://raw.githubusercontent.com/Microsoft/dotnet/master/LICENSE</PackageLicenseUrl>
+    <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
+    <GenerateAssemblyDescriptionAttribute>false</GenerateAssemblyDescriptionAttribute>
+    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
+    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+    <GenerateAssemblyCopyrightAttribute>false</GenerateAssemblyCopyrightAttribute>
+    <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
+    <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
+    <GenerateNeutralResourcesLanguageAttribute>false</GenerateNeutralResourcesLanguageAttribute>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="CSharpAzureCodeNamingFrameworkTests.*" />
+    <EmbeddedResource Remove="CSharpAzureCodeNamingFrameworkTests.*" />
+    <None Include="App.config" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'dnxcore50' ">
+    <ProjectReference Include="..\..\..\..\ClientRuntimes\CSharp\Microsoft.Rest.ClientRuntime\Microsoft.Rest.ClientRuntime.csproj" />
+    <ProjectReference Include="..\..\..\..\ClientRuntimes\CSharp\Microsoft.Rest.ClientRuntime.Azure\Microsoft.Rest.ClientRuntime.Azure.csproj" />
+    <ProjectReference Include="..\CSharp.Tests\CSharp.Tests.csproj" />
+    <PackageReference Include="xunit.runner.dnx" Version="2.1.0-rc1-build204" />
+    <PackageReference Include="xunit" Version="2.2.0-beta5-build3474" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Framework.Logging.Console" Version="1.0.0-beta8" />
+  </ItemGroup>
+
+</Project>
